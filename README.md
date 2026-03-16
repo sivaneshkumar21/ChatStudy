@@ -73,6 +73,67 @@ Client-server chat applications are versatile tools that facilitate real-time co
 
 Client-server chat applications are foundational to real-time communication over networks. They incorporate principles of socket programming, communication protocols, and security mechanisms to provide a seamless user experience. Understanding the basics of client-server chat applications is essential for developers involved in networked application development, as they form the backbone of various collaborative communication systems. As technology evolves, chat applications continue to adapt, incorporating new features and technologies to enhance user interaction and connectivity.
 
+## PROGRAM
+CLIENT SIDE :
+~~~ 
+Client.py
+
+
+# Import socket module 
+import socket             
+
+# Create a socket object 
+s = socket.socket()         
+
+# Define the port on which you want to connect 
+port = 12345                
+
+# connect to the server on local computer 
+s.connect(('169.254.101.23', port)) 
+#s.setblocking(False)
+# receive data from the server and decoding to get the string.
+s.send("Thanks for accpeting the connection. ".encode())
+while True:
+    d = s.recv(1024).decode()
+    print ("Server Says: ",d)
+    m = input("Enter ur msg:")
+    s.send(m.encode())
+~~~
+SERVER SIDE:
+~~~
+import socket
+
+server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+
+host = '0.0.0.0'  
+port = 12345
+
+server_socket.bind((host, port))
+
+server_socket.listen(1)
+print("Server is waiting for connection...")
+
+conn, addr = server_socket.accept()
+print("Connected to client:", addr)
+
+while True:
+    client_msg = conn.recv(1024).decode()
+    if client_msg.lower() == "exit":
+        print("Client disconnected.")
+        break
+    print("Client:", client_msg)
+
+    server_msg = input("Server: ")
+    conn.send(server_msg.encode())
+
+conn.close()
+server_socket.close()
+~~~
+## OUTPUT
+CLIENT SIDE:
+<img width="1561" height="1025" alt="image" src="https://github.com/user-attachments/assets/761691e7-5917-4387-8154-85ea0113f9b6" />
+SERVER SIDE :
+<img width="1298" height="1079" alt="image" src="https://github.com/user-attachments/assets/5aa5dc8c-012a-4fb3-ac1d-634fc2ace1cb" />
 
 ## Result:
 
